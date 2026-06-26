@@ -21,6 +21,7 @@ namespace Nomnom.BepInEx.Editor {
             var networkManagerType = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => x.GetTypes())
                 .FirstOrDefault(x => x.FullName == "Unity.Netcode.NetworkManager");
+            if (networkManagerType == null) return;
             var rpcFuncTableField = networkManagerType.GetField("__rpc_func_table");
             var rpcNameTableField = networkManagerType.GetField("__rpc_name_table");
             var rpcFuncTable = (IDictionary)rpcFuncTableField.GetValue(null);

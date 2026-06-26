@@ -9,6 +9,7 @@ namespace Nomnom.BepInEx.Editor.Patches {
     internal static class NetworkManagerPatch {
         public static MethodBase TargetMethod() {
             var networkManagerType = AccessTools.TypeByName("Unity.Netcode.NetworkManager");
+            if (networkManagerType == null) return null;
             var rpcFuncTableField = AccessTools.Field(networkManagerType, "__rpc_func_table");
             return rpcFuncTableField.FieldType.GetMethod("Add");
         }

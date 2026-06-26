@@ -69,7 +69,11 @@ namespace Nomnom.BepInEx.Editor {
             foreach (var patch in patches) {
                 if (patch.Item2.Lifetime.HasFlag(PatchLifetime.DuringChainloader)) {
                     Debug.Log($" - found {patch.Item1}");
-                    harmony.PatchAll(patch.Item1);
+                    try {
+                        harmony.PatchAll(patch.Item1);
+                    } catch (Exception e) {
+                        Debug.LogWarning($"Skipped patch {patch.Item1}: {e.InnerException?.Message ?? e.Message}");
+                    }
                 }
             }
             
@@ -86,7 +90,11 @@ namespace Nomnom.BepInEx.Editor {
             foreach (var patch in patches) {
                 if (patch.Item2.Lifetime.HasFlag(PatchLifetime.AfterChainloader)) {
                     Debug.Log($" - found {patch.Item1}");
-                    harmony.PatchAll(patch.Item1);
+                    try {
+                        harmony.PatchAll(patch.Item1);
+                    } catch (Exception e) {
+                        Debug.LogWarning($"Skipped patch {patch.Item1}: {e.InnerException?.Message ?? e.Message}");
+                    }
                 }
             }
             
